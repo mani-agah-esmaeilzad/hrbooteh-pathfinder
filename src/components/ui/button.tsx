@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-hrbooteh focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -15,12 +15,22 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        
+        // hrbooteh custom variants
+        hrbooteh: "bg-hrbooteh-primary text-hrbooteh-primary-foreground hover:bg-hrbooteh-primary-hover shadow-hrbooteh-md hover:shadow-hrbooteh-lg transform-gpu hover:scale-[1.02] transition-all duration-200",
+        "hrbooteh-outline": "border-2 border-hrbooteh-primary text-hrbooteh-primary bg-transparent hover:bg-hrbooteh-primary hover:text-hrbooteh-primary-foreground",
+        "hrbooteh-success": "bg-hrbooteh-success text-hrbooteh-success-foreground hover:opacity-90 shadow-sm",
+        "hrbooteh-accent": "bg-hrbooteh-accent text-hrbooteh-accent-foreground hover:opacity-90 shadow-sm",
+        "hrbooteh-ghost": "text-hrbooteh-text-primary hover:bg-hrbooteh-surface-elevated",
+        "hrbooteh-gradient": "bg-hrbooteh-gradient-primary text-white shadow-hrbooteh-lg hover:shadow-xl transform-gpu hover:scale-[1.02] transition-all duration-200",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
+        default: "h-11 px-6 py-2",
+        sm: "h-9 rounded-md px-4 text-sm",
+        lg: "h-14 rounded-lg px-10 text-base font-semibold",
+        xl: "h-16 rounded-lg px-12 text-lg font-semibold",
+        icon: "h-11 w-11",
+        "icon-sm": "h-9 w-9",
       },
     },
     defaultVariants: {
