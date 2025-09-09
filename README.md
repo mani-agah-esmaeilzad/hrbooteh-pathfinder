@@ -1,279 +1,73 @@
-# hrbooteh - Professional Skills Assessment Platform
+# Welcome to your Lovable project
 
-A full-stack application for comprehensive professional skills assessment with interactive AI-powered evaluations.
+## Project info
 
-## 🚀 Quick Start
+**URL**: https://lovable.dev/projects/1bf35467-48ed-4aab-864d-805ffa105c8e
 
-### Prerequisites
+## How can I edit this code?
 
-- **Node.js** (v18 or higher)
-- **Python** (v3.11 or higher)
-- **Git**
+There are several ways of editing your application.
 
-### Option 1: Simple Development Setup (Recommended)
+**Use Lovable**
 
-```bash
-# Clone the repository
-git clone <your-repo-url>
-cd hrbooteh-pathfinder
+Simply visit the [Lovable Project](https://lovable.dev/projects/1bf35467-48ed-4aab-864d-805ffa105c8e) and start prompting.
 
-# Install frontend dependencies
-npm install
+Changes made via Lovable will be committed automatically to this repo.
 
-# Install backend dependencies
-cd backend
-pip install -r requirements.txt
-cd ..
+**Use your preferred IDE**
 
-# Start both frontend and backend in development mode
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+Follow these steps:
+
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-This will start:
-- **Frontend**: http://localhost:8080 (React + Vite)
-- **Backend**: http://localhost:8000 (FastAPI)
-- **API Docs**: http://localhost:8000/docs
+**Edit a file directly in GitHub**
 
-### Option 2: Docker Setup
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-```bash
-# Development with Docker
-docker-compose -f docker-compose.dev.yml up
+**Use GitHub Codespaces**
 
-# Production with Docker
-docker-compose up --build
-```
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## 📁 Project Structure
+## What technologies are used for this project?
 
-```
-hrbooteh-pathfinder/
-├── src/                          # React frontend source
-│   ├── components/               # Reusable UI components
-│   ├── pages/                   # Application pages
-│   ├── contexts/                # React contexts
-│   └── lib/                     # Utilities and API client
-├── backend/                     # Python FastAPI backend
-│   ├── app/
-│   │   ├── api/v1/routes/      # API route handlers
-│   │   ├── core/               # Core functionality
-│   │   ├── models/             # Database models
-│   │   ├── schemas/            # Pydantic schemas
-│   │   └── services/           # Business logic
-│   ├── tests/                  # Backend tests
-│   └── requirements.txt        # Python dependencies
-├── public/                     # Static assets
-└── docker-compose.yml         # Docker configuration
-```
+This project is built with:
 
-## 🛠️ Development
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
-### Frontend Development
+## How can I deploy this project?
 
-```bash
-# Start frontend dev server
-npm run frontend:dev
+Simply open [Lovable](https://lovable.dev/projects/1bf35467-48ed-4aab-864d-805ffa105c8e) and click on Share -> Publish.
 
-# Build frontend
-npm run frontend:build
+## Can I connect a custom domain to my Lovable project?
 
-# Lint and format
-npm run frontend:lint
-npm run frontend:format
-```
+Yes, you can!
 
-### Backend Development
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-```bash
-# Start backend dev server
-npm run backend:dev
-# or
-cd backend && python start-dev.py
-
-# Run tests
-npm run backend:test
-# or
-cd backend && python -m pytest
-
-# Lint and format
-npm run backend:lint
-npm run backend:format
-```
-
-### Full Stack Commands
-
-```bash
-# Start both frontend and backend
-npm run dev
-
-# Build both
-npm run build
-
-# Run all tests
-npm run test
-
-# Format all code
-npm run format
-
-# Clean all build artifacts
-npm run clean
-```
-
-## 🗄️ Database
-
-### Development (SQLite)
-The development setup uses SQLite by default. The database file will be created automatically at `backend/hrbooteh.db`.
-
-### Production (PostgreSQL)
-For production, configure PostgreSQL in your environment variables:
-
-```bash
-DATABASE_URL=postgresql://username:password@localhost:5432/hrbooteh_db
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Copy and customize the environment files:
-
-```bash
-# Backend
-cp backend/.env.development backend/.env
-cp backend/.env.production.example backend/.env.production
-
-# Frontend
-cp .env.development .env.local
-```
-
-### Key Backend Environment Variables
-
-```bash
-# Security
-SECRET_KEY=your-secret-key-here
-ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-# Database
-DATABASE_URL=sqlite:///hrbooteh.db  # or PostgreSQL URL
-
-# AI (Optional)
-OPENAI_API_KEY=your-openai-key
-ANTHROPIC_API_KEY=your-anthropic-key
-```
-
-## 📊 Features
-
-- **🔐 Authentication**: JWT-based authentication with refresh tokens
-- **📝 Interactive Assessments**: AI-powered skill assessments
-- **📈 Progress Tracking**: Visual progress timeline
-- **🎯 Multi-type Assessments**: Independence, confidence, negotiation, leadership, communication
-- **💬 Chat-based Interface**: Natural conversation flow
-- **📊 Detailed Analysis**: Comprehensive results and recommendations
-- **🔄 Real-time Updates**: Live assessment progress
-- **📱 Responsive Design**: Works on all devices
-
-## 🧪 Testing
-
-### Backend Tests
-```bash
-cd backend
-python -m pytest                    # Run all tests
-python -m pytest tests/test_auth.py # Run specific tests
-python -m pytest -v                 # Verbose output
-```
-
-### Frontend Tests
-```bash
-npm run frontend:test               # Run frontend tests
-```
-
-## 🚀 Deployment
-
-### Using Docker
-
-1. **Production Deployment**:
-   ```bash
-   docker-compose up -d --build
-   ```
-
-2. **Environment Configuration**:
-   - Copy `.env.production.example` to `.env.production`
-   - Update all production variables
-   - Ensure secure SECRET_KEY
-   - Configure your database
-
-### Manual Deployment
-
-1. **Build Frontend**:
-   ```bash
-   npm run frontend:build
-   ```
-
-2. **Deploy Backend**:
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   python main.py
-   ```
-
-### Health Checks
-
-- **Frontend**: http://your-domain/health
-- **Backend**: http://your-domain:8000/health
-
-## 📚 API Documentation
-
-When running in development mode, visit:
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-## 🤝 API Integration
-
-The backend provides the following main endpoints:
-
-### Authentication
-- `POST /api/v1/auth/register` - Register new user
-- `POST /api/v1/auth/login` - Login user
-- `GET /api/v1/auth/me` - Get current user
-- `POST /api/v1/auth/refresh` - Refresh access token
-
-### Assessments
-- `POST /api/v1/assessments/start` - Start new assessment
-- `POST /api/v1/assessments/{id}/message` - Send message
-- `GET /api/v1/assessments/{id}/results` - Get results
-- `GET /api/v1/assessments/user` - Get user assessments
-
-## 🎯 Assessment Types
-
-1. **استقلال** (Independence)
-2. **اعتماد به نفس** (Confidence)
-3. **مهارت‌های مذاکره** (Negotiation Skills)
-4. **مهارت‌های رهبری** (Leadership Skills)
-5. **مهارت‌های ارتباطی** (Communication Skills)
-
-## 💡 AI Integration
-
-The system includes a pluggable AI service that can be configured with:
-- **OpenAI GPT models** (GPT-3.5-turbo, GPT-4)
-- **Anthropic Claude models**
-- **Custom AI implementations**
-
-For development, it uses a stub implementation that simulates realistic conversations.
-
-## 🔄 Development Workflow
-
-This project works similar to **Next.js** but with React + FastAPI:
-
-1. **Start Development**: `npm run dev` (starts both frontend and backend)
-2. **Hot Reload**: Both frontend and backend support hot reload
-3. **Unified Build**: `npm run build` builds both parts
-4. **Single Config**: Environment variables managed centrally
-5. **Docker Ready**: Complete containerization support
-
-## 📄 License
-
-This project is proprietary software. All rights reserved.
-
----
-
-**Built with ❤️ using React, FastAPI, and modern web technologies**
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
