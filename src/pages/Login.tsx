@@ -6,17 +6,22 @@ import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/ui/logo";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { useAuth } from "@/contexts/auth-context";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login, isLoading } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate login - in real app this would be API call
-    navigate('/dashboard');
+    
+    const success = await login(email, password);
+    if (success) {
+      navigate('/dashboard');
+    }
   };
 
   return (
@@ -82,8 +87,16 @@ const Login = () => {
               variant="hrbooteh"
               size="lg"
               className="w-full mt-6"
+              disabled={isLoading}
             >
-              ورود
+              {isLoading ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin ml-2"></div>
+                  در حال ورود...
+                </>
+              ) : (
+                'ورود'
+              )}
             </Button>
           </form>
           

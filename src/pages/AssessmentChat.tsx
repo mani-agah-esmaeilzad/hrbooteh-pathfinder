@@ -6,6 +6,8 @@ import { Logo } from "@/components/ui/logo";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowUp, Mic, Clock, ArrowLeft } from "lucide-react";
 import { useAssessment } from "@/contexts/assessment-context";
+import { api, ApiError } from "@/lib/api";
+import { toast } from "sonner";
 
 interface Message {
   id: string;
@@ -24,23 +26,54 @@ const AssessmentChat = () => {
   const [inputValue, setInputValue] = useState("");
   const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 minutes in seconds
   const [isLoading, setIsLoading] = useState(false);
+  const [backendAssessmentId, setBackendAssessmentId] = useState<number | null>(null);
+  const [analysisReady, setAnalysisReady] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
   const currentAssessment = assessments.find(a => a.id === assessmentId);
 
-  // Initialize with welcome message
+  // Start assessment on mount
   useEffect(() => {
-    if (currentAssessment) {
+    if (currentAssessment && !backendAssessmentId) {
+      startAssessment();
+    }
+  }, [currentAssessment, backendAssessmentId]);
+
+  const startAssessment = async () => {
+    if (!currentAssessment) return;
+    
+    try {
+      setIsLoading(true);
+      const response = await api.assessments.start(
+        currentAssessment.id, // assessment type
+        `شروع ارزیابی ${currentAssessment.title}`
+      );
+      
+      setBackendAssessmentId(response.assessment_id);
+      
+      // Add the welcome message from AI
       const welcomeMessage: Message = {
         id: "welcome",
-        text: `سلام! من دکتر احمدی هستم و امروز قصد دارم با شما در مورد ${currentAssessment.title} صحبت کنم. این ارزیابی حدود ۱۵ دقیقه طول می‌کشد و من چندین سوال از شما خواهم پرسید.\n\nآماده هستید که شروع کنیم؟`,
+        text: response.ai_response.message,
         isUser: false,
         timestamp: new Date(),
         senderName: "دکتر احمدی"
       };
+      
       setMessages([welcomeMessage]);
+      
+    } catch (error) {
+      console.error('Failed to start assessment:', error);
+      if (error instanceof ApiError) {
+        toast.error(error.message);
+      } else {
+        toast.error('خطا در شروع ارزیابی');
+      }
+      navigate('/dashboard');
+    } finally {
+      setIsLoading(false);
     }
-  }, [currentAssessment]);
+  };
 
   // Timer countdown
   useEffect(() => {
@@ -70,7 +103,7 @@ const AssessmentChat = () => {
   };
 
   const handleSendMessage = async () => {
-    if (!inputValue.trim() || isLoading) return;
+    if (!inputValue.trim() || isLoading || !backendAssessmentId) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -81,32 +114,51 @@ const AssessmentChat = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const messageText = inputValue;
     setInputValue("");
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponses = [
-        "بسیار جالب. می‌توانید بیشتر توضیح دهید؟",
-        "متوجه شدم. در چنین شرایطی چگونه احساس می‌کنید؟",
-        "این نکته بسیار مهمی است. چه عواملی باعث این تصمیم شما شد؟",
-        "درسته. آیا تجربه مشابهی قبلاً داشته‌اید؟",
-        "عالی است. حالا بگویید در موقعیت‌های مشابه چگونه عمل می‌کنید؟"
-      ];
-      
-      const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+    try {
+      const response = await api.assessments.sendMessage(backendAssessmentId, messageText);
       
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: randomResponse,
+        text: response.ai_response.message,
         isUser: false,
         timestamp: new Date(),
         senderName: "دکتر احمدی"
       };
 
       setMessages(prev => [...prev, aiMessage]);
+      
+      // Check if analysis is ready
+      if (response.analysis_ready || response.ai_response.analysis_ready) {
+        setAnalysisReady(true);
+        toast.success('تحلیل آماده شد! می‌توانید ارزیابی را به پایان برسانید.');
+      }
+      
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      
+      // Add fallback AI message
+      const fallbackMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "متأسفم، در حال حاضر مشکلی در ارتباط وجود دارد. لطفاً دوباره امتحان کنید.",
+        isUser: false,
+        timestamp: new Date(),
+        senderName: "دکتر احمدی"
+      };
+      
+      setMessages(prev => [...prev, fallbackMessage]);
+      
+      if (error instanceof ApiError) {
+        toast.error(error.message);
+      } else {
+        toast.error('خطا در ارسال پیام');
+      }
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const handleAssessmentComplete = () => {
